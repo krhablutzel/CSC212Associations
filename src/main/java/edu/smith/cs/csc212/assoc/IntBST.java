@@ -8,8 +8,6 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import me.jjfoley.adt.errors.TODOErr;
-
 /**
  * A binary search tree (BST) of integers!
  * 
@@ -178,7 +176,25 @@ public class IntBST {
 		 * @return an integer greater than or equal to 1.
 		 */
 		public int getHeight() {
-			throw new TODOErr();
+			if (this.left == null && this.right == null) {
+				// leaf
+				return 1;
+			} else if (this.left == null) {
+				// something to right only
+				return 1 + this.right.getHeight();
+			} else if (this.right == null) {
+				// something to left only
+				return 1 + this.left.getHeight();
+			} else {
+				// something to right and left
+				int l = this.left.getHeight();
+				int r = this.right.getHeight();
+				if (l >= r) {
+					return 1 + l;
+				} else {
+					return 1 + r;
+				}
+			}
 		}
 		//// end
 
@@ -232,7 +248,18 @@ public class IntBST {
 		 * @param output - a list.
 		 */
 		public void addToSortedList(List<Integer> output) {
-			throw new TODOErr();
+			// add all to left
+			if (this.left != null) {
+				this.left.addToSortedList(output);
+			}
+			
+			// add middle
+			output.add(this.value);
+			
+			// add all to right
+			if (this.right != null) {
+				this.right.addToSortedList(output);
+			}
 		}
 		//// end
 
@@ -296,7 +323,31 @@ public class IntBST {
 		 * @return true if found, false if not found.
 		 */
 		public boolean contains(int value) {
-			throw new TODOErr();
+			// found value
+			if (this.value == value) {
+				return true;
+			}
+			
+			// try to find in child node
+			if (this.value > value) {
+				// go left?
+				if (this.left == null) {
+					// can't go left! not there
+					return false;
+				} else {
+					// go left
+					return this.left.contains(value);
+				}
+			} else {
+				// go right
+				if (this.right == null) {
+					// can't go right! not there
+					return false;
+				} else {
+					// go right
+					return this.right.contains(value);
+				}
+			}
 		}
 		//// end
 
